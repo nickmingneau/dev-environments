@@ -4,6 +4,22 @@ import { IEnvironment } from "../types";
 
 const branches = ["main", "dev", "feature-x", "bugfix-y"];
 
+const rowStyles = {
+  width: "300px",
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: "10px",
+};
+
+const createEnvStyles = {
+  border: "1px solid grey",
+  borderRadius: "4px",
+  padding: "8px",
+  cursor: "pointer",
+  backgroundColor: "rgb(219 219 219)",
+  marginTop: "15Px",
+};
+
 const EnvironmentForm: React.FC<{ onSuccess: () => void }> = ({
   onSuccess,
 }) => {
@@ -13,7 +29,6 @@ const EnvironmentForm: React.FC<{ onSuccess: () => void }> = ({
   const [usedBranches, setUsedBranches] = useState<string[]>([]);
 
   useEffect(() => {
-    // Fetch existing environments to determine used branches
     axios.get<IEnvironment[]>("/api/environments").then((response) => {
       const used = response.data.map((env) => env.branch);
       setUsedBranches(used);
@@ -37,7 +52,7 @@ const EnvironmentForm: React.FC<{ onSuccess: () => void }> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div style={rowStyles}>
         <label>Name:</label>
         <input
           type="text"
@@ -46,7 +61,7 @@ const EnvironmentForm: React.FC<{ onSuccess: () => void }> = ({
           required
         />
       </div>
-      <div>
+      <div style={rowStyles}>
         <label>Branch:</label>
         <select
           value={branch}
@@ -65,7 +80,7 @@ const EnvironmentForm: React.FC<{ onSuccess: () => void }> = ({
             ))}
         </select>
       </div>
-      <div>
+      <div style={rowStyles}>
         <label>Database:</label>
         <input
           type="text"
@@ -74,7 +89,9 @@ const EnvironmentForm: React.FC<{ onSuccess: () => void }> = ({
           required
         />
       </div>
-      <button type="submit">Create Environment</button>
+      <button type="submit" style={createEnvStyles}>
+        Create Environment
+      </button>
     </form>
   );
 };

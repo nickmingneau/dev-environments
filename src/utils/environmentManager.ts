@@ -18,7 +18,6 @@ class EnvironmentManager {
   subscribe(res: NextApiResponse) {
     this.subscribedCalls.push(res);
 
-    // Send the initial data to the subscriber
     res.write(`data: ${JSON.stringify(this.environments)}\n\n`);
 
     return () => {
@@ -27,15 +26,12 @@ class EnvironmentManager {
   }
 
   private notifySubscribers() {
-    console.log("notifying");
-    console.log(this.subscribedCalls.length);
     for (const res of this.subscribedCalls) {
-      console.log("resolving calls");
       res.write(`data: ${JSON.stringify(this.environments)}\n\n`);
     }
   }
 
-  getEnvironments() {
+  getEnvironments(): IEnvironment[] {
     return this.environments;
   }
 
@@ -50,10 +46,25 @@ class EnvironmentManager {
   }
 
   closeEnvironment(id: string) {
+    this.updateEnvironmentState(id, "closed");
+  }
+
+  updateEnvironmentState(id: string, newState: EnvironmentState) {
     this.environments = this.environments.map((env) =>
-      env.id === id ? { ...env, state: "closed" } : env
+      env.id === id ? { ...env, state: newState } : env
     );
     this.notifySubscribers();
+  }
+
+  startStateTransitions() {
+    setInterval(() => {
+      this.environments.forEach((env) => {
+        const nextState = getNextState(env.state as EnvironmentState);
+        if (env.state !== "available " && nextState) {
+          this.updateEnvironmentState(env.id, nextState);
+        }
+      });
+    }, 5000);
   }
 }
 
@@ -63,9 +74,13 @@ export const getNextState = (
   const possibleTransitions = stateTransitions[currentState];
   if (possibleTransitions.length === 0) return null;
   const nextState =
-    possibleTransitions[Math.floor(Math.random() * possibleTransitions.length)];
+    possibleTransitions[
+      Math.floor(Math.random() * 10) < 1 ? possibleTransitions.length - 1 : 0
+    ];
   return nextState;
 };
 
 const _environmentManager = new EnvironmentManager();
 export const environmentManager = _environmentManager;
+
+environmentManager.startStateTransitions();

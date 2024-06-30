@@ -17,7 +17,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     const unsubscribe = environmentManager.subscribe(res);
 
     req.on("close", () => {
-      console.log("unsubscribing");
       unsubscribe();
       res.end();
     });

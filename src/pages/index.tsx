@@ -1,7 +1,7 @@
 import React from "react";
 
 const Home = () => {
-  return <div>Welcome to the Environment Management App!</div>;
+  return <h1>Welcome to the Environment Management App!</h1>;
 };
 
 export default Home;
