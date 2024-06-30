@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const cellStyles = { border: "1px solid #ddd", padding: "8px" };
+
 interface IEnvironment {
   id: string;
   name: string;
@@ -53,33 +55,23 @@ const EnvironmentList = () => {
       >
         <thead>
           <tr>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Name</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Branch</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-              Database
-            </th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>State</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-              Actions
-            </th>
+            <th style={cellStyles}>Name</th>
+            <th style={cellStyles}>Branch</th>
+            <th style={cellStyles}>Database</th>
+            <th style={cellStyles}>State</th>
+            <th style={cellStyles}>Actions</th>
           </tr>
         </thead>
         <tbody>
           {environments.map((env) => (
             <tr key={env.id}>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                {env.name}
-              </td>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                {env.branch}
-              </td>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                {env.database}
-              </td>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+              <td style={cellStyles}>{env.name}</td>
+              <td style={cellStyles}>{env.branch}</td>
+              <td style={cellStyles}>{env.database}</td>
+              <td style={cellStyles}>
                 <b>{env.state}</b>
               </td>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+              <td style={cellStyles}>
                 {env.state === "available" && (
                   <>
                     <button
