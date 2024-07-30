@@ -2,7 +2,7 @@
 
 ## Context
 
-This is an test i made for a company.
+This is a technical test i made for a company to prove my Frontend Development capabilities.
 I completed the task in roughly three hours according to the specifications below.
 
 ## Introduction
