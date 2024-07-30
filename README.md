@@ -75,5 +75,4 @@ Allow the user to close an existing environment, only if the environment is in a
 ## Timing
 
 You decide yourself how much time and effort you invest in it, but quality(!) and a reasonable delivery time are
-always highly appreciated. Please send us an email (jobs@clubee.com) when you think the assignment is ready for
-review. Please mention your name, Github username, and a link to what we need to review.
+always highly appreciated.
